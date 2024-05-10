@@ -31,3 +31,21 @@ export const POST = async (req: Request, res: NextResponse) => {
 };
 
 
+
+export const DELETE = async (req: Request, res: NextResponse) => {
+  try {
+    const id: number = parseInt(req.url.split("/todos/")[1]);
+    const title = await req.json();
+    await createClient();
+    console.log(title)
+    const posts = await prisma.post.delete({
+      where: { id },
+    });
+    return NextResponse.json({ message: "Success", posts });
+  } catch (error) {
+    return NextResponse.json("DELETE Error");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+

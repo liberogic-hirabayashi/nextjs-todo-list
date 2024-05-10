@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -16,34 +16,33 @@ const postTodo = async (title: string) => {
   return await res.json();
 };
 
-
-export default async function AddTask() {
+export default function AddTask() {
+  const [tasktitle, setTaskTitle] = useState("");
   const router = useRouter();
 
-
-  const titleRef = useRef<HTMLInputElement | any>("");
-  // const {title,setTitle}=useState<string>('')
-  // const title="タイトルが入ります。"
-  const inputValue = titleRef.current?.value;
+  // const titleRef = useRef<HTMLInputElement | any>("");
+  // const inputValue = titleRef.current?.value;
 
   const handleClick = async (e: React.FormEvent) => {
     e.preventDefault();
-    await postTodo(inputValue);
+    await postTodo(tasktitle);
     await router.refresh();
-
+    setTaskTitle('')
   };
-
-  useEffect(() => {
-    const a = async () => {
-     
-    };
-
-    a;
-  }, [inputValue]);
+  // const changeTitle = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   await setTaskTitle(e.target.value);
+  // };
 
   return (
     <form onSubmit={handleClick}>
-      <input type="text" ref={titleRef}  className="border rounded p-1 mr-4" />
+      <input
+        type="text"
+        value={tasktitle}
+        onChange={(e) => {
+          setTaskTitle(e.target.value);
+        }}
+        className="border rounded p-1 mr-4"
+      />
       <button className={buttonStyle}>追加</button>
     </form>
   );
