@@ -1,7 +1,8 @@
 import React from 'react'
 import { Todos } from "../../../types";
+import Link from 'next/link';
 
-const buttonStyle = `border p-1 px-4 rounded text-white`;
+
 const getAllList = async () => {
   const res = await fetch("http://localhost:3000/api/todos", {
     cache: "no-cache",
@@ -15,19 +16,15 @@ const getAllList = async () => {
 export default async function Todo() {
   const todos = await getAllList();
   return (
-    <ul className="mt-4 w-full pl-4">
+    <ul className="w-full">
     {todos.map((todo: Todos) => (
       <li
         key={todo.id}
-        className="pb-2 list-disc text-white flex items-center"
+        className="pb-2 pl-4 border-b border-[#ffffff33] mt-4 text-white "
       >
+        <Link className='hover:text-cyan-300 text-lg' href={`/todos/edit/${todo.id}`}>
         {todo.title}
-        <div className='ml-auto'>
-          <button className={`${buttonStyle} mr-1 text-green-300`}>
-            編集
-          </button>
-          <button className={`${buttonStyle} text-red-200`}>削除</button>
-        </div>
+        </Link>
       </li>
     ))}
   </ul>

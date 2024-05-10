@@ -20,28 +20,23 @@ export default function AddTask() {
   const [tasktitle, setTaskTitle] = useState("");
   const router = useRouter();
 
-  // const titleRef = useRef<HTMLInputElement | any>("");
-  // const inputValue = titleRef.current?.value;
-
   const handleClick = async (e: React.FormEvent) => {
     e.preventDefault();
     await postTodo(tasktitle);
     await router.refresh();
     setTaskTitle('')
   };
-  // const changeTitle = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   await setTaskTitle(e.target.value);
-  // };
 
   return (
     <form onSubmit={handleClick}>
       <input
+      
         type="text"
         value={tasktitle}
         onChange={(e) => {
           setTaskTitle(e.target.value);
         }}
-        className="border rounded p-1 mr-4"
+        className="border rounded p-1 mr-4 w-60"
       />
       <button className={buttonStyle}>追加</button>
     </form>
