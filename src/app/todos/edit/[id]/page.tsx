@@ -5,9 +5,18 @@ import { useEffect, useRef, useState } from "react";
 const buttonStyle = `border p-1 px-4 rounded text-white`;
 
 const editTodo = async (title: string | undefined, id: number) => {
-  const res = await fetch(`http://localhost:3000/todos/edit/${id}`, {
+  const res = await fetch(`http://localhost:3000/api/todos/${id}`, {
     method: "PUT",
     body: JSON.stringify({ title, id }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });  
+  return await res.json();
+};
+const deleteTodo= async (id: number) => {
+  const res = await fetch(`http://localhost:3000/api/todos/${id}`, {
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
@@ -35,6 +44,13 @@ export default function Page({ params }: { params: { id: number } }) {
     router.refresh();
   };
 
+
+  const handleDelete= async()=>{
+    await deleteTodo(params.id)
+    console.log ('削除')
+
+  }
+
   useEffect(() => {
     getBlogById(params.id)
       .then((data) => {
@@ -51,7 +67,7 @@ export default function Page({ params }: { params: { id: number } }) {
       <h1 className="text-center mb-4 text-white bold text-[32px] font-bold">
         Todo 編集
       </h1>
-      <form  onSubmit={handleEdit} className="flex justify-center ">
+      <form onSubmit={handleEdit} className="flex justify-center ">
         <input type="text" ref={titleRef} className="border rounded w-60" />
         <div className="ml-4">
           <button
@@ -60,7 +76,7 @@ export default function Page({ params }: { params: { id: number } }) {
           >
             編集
           </button>
-          <button className={`${buttonStyle} text-red-200`}>削除</button>
+          <button onClick={handleDelete} className={`${buttonStyle} text-red-200`}>削除</button>
         </div>
       </form>
     </div>
