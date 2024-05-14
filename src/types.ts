@@ -1,5 +1,6 @@
 
 export type Todos={
     id:number;
-    title:string
+    title:string;
+    status:string;
   }

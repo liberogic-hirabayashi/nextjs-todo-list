@@ -9,7 +9,7 @@ export const GET = async (req: Request, res: NextResponse) => {
   try {
     await createClient();
     const posts = await prisma.post.findMany();
-    return NextResponse.json({posts});
+    return NextResponse.json({ posts });
   } catch (error) {
     return NextResponse.json("GET Error");
   } finally {
@@ -19,9 +19,9 @@ export const GET = async (req: Request, res: NextResponse) => {
 
 export const POST = async (req: Request, res: NextResponse) => {
   try {
-    const title = await req.json();
+    const { title, status } = await req.json();
     await createClient();
-    const posts = await prisma.post.create({ data:  title  });
+    const posts = await prisma.post.create({ data: { title, status } });
     return NextResponse.json({ message: "Success", posts });
   } catch (error) {
     return NextResponse.json("POST Error");
@@ -29,6 +29,3 @@ export const POST = async (req: Request, res: NextResponse) => {
     await prisma.$disconnect();
   }
 };
-
-
-

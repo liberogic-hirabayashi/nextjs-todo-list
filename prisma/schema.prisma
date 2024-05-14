@@ -16,4 +16,5 @@ datasource db {
 model post{
   id Int @id @default(autoincrement())
   title String
+  status String
 }
