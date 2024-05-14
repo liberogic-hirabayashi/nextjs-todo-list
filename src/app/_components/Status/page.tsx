@@ -17,14 +17,11 @@ const statusTodo = async (status: string, id: number) => {
 };
 
 
-const Status = ({ todoId,statusValue }: { todoId: number,statusValue:any }) => {
-  const [status, setStatus] = useState<string>(statusValue);
+const Status = ({ todoId,statusValue }: { todoId: number,statusValue:string }) => {
   const router = useRouter();
-
 
   const handleStatus = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const statusValue = e.target.value;
-    setStatus(statusValue);
     await statusTodo(statusValue, todoId);
     router.push("/");
     router.refresh();
@@ -35,7 +32,7 @@ const Status = ({ todoId,statusValue }: { todoId: number,statusValue:any }) => {
         className={` bg-transparent text-white  border p-1 rounded mr-2`}
         name=""
         id=""
-        value={status}
+        value={statusValue}
         onChange={(e) => handleStatus(e)}
       >
         <option value="未着手">未着手</option>

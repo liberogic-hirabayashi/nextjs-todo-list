@@ -5,11 +5,10 @@ import Status from "../../../_components/Status/page";
 
 const buttonStyle = `border p-1 px-4 rounded text-white`;
 
-
 const editTodo = async (title: string | undefined, id: number) => {
   const res = await fetch(`http://localhost:3000/api/todos/${id}`, {
     method: "PUT",
-    body: JSON.stringify({ title, id,status }),
+    body: JSON.stringify({ title, id }),
     headers: {
       "Content-Type": "application/json",
     },
@@ -38,16 +37,16 @@ const getTodoById = async (id: number) => {
   return await data.posts;
 };
 
-export default function Page({ params }: { params: { id: number} }) {
+
+export default function Page({ params }: { params: { id: number,status:string } }) {
   const titleRef = useRef<HTMLInputElement | null>(null);
   const router = useRouter();
-  const value=getStatusValue(params.id)
-  console.log(value)
+  const [todoStatus, setTodoStatus] = useState<string>("");
 
   const handleEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     await editTodo(titleRef.current?.value, params.id);
-
+    await getStatusValue(params.id)
     router.push("/");
     router.refresh();
   };
@@ -61,6 +60,7 @@ export default function Page({ params }: { params: { id: number} }) {
   useEffect(() => {
     getTodoById(params.id)
       .then((data) => {
+        setTodoStatus(data.status)
         titleRef.current!.value = data.title;
       })
       .catch((err) => {
@@ -77,7 +77,7 @@ export default function Page({ params }: { params: { id: number} }) {
       <form onSubmit={handleEdit} className="flex justify-center ">
         <input type="text" ref={titleRef} className="border rounded w-60" />
         <div className="ml-4 flex items-center">
-          <Status todoId={params.id} statusValue={value} />
+          <Status todoId={params.id} statusValue={todoStatus} />
 
           <button className={`${buttonStyle} mr-1 text-green-500`}>編集</button>
           <button
