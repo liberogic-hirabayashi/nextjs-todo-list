@@ -35,7 +35,6 @@ const getBlogById = async (id: number) => {
 export default function Page({ params }: { params: { id: number } }) {
   const titleRef = useRef<HTMLInputElement | null>(null);
   const router = useRouter();
-  console.log(params);
 
   const handleEdit = async (e: React.FormEvent) => {
     e.preventDefault();

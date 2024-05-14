@@ -17,13 +17,14 @@ const statusTodo = async (status: string, id: number) => {
 };
 
 const Status = ({ todoId }: { todoId: number }) => {
-  const [status, setStatus] = useState<string>("");
+  const [status, setStatus] = useState<string>();
   const router = useRouter();
+  console.log(status)
 
   const handleStatus = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const status = e.target.value;
-    setStatus(status);
-    await statusTodo(status, todoId);
+    const statusValue = e.target.value;
+    setStatus(statusValue);
+    await statusTodo(statusValue, todoId);
     router.push("/");
     router.refresh();
   };
