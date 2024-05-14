@@ -25,16 +25,24 @@ const deleteTodo = async (id: number) => {
   });
   return res.json();
 };
+const getStatusValue = async (id: number) => {
+  const res = await fetch(`http://localhost:3000/api/todos/${id}`);
+  const data = await res.json();
+  console.log(data.posts.status);
+  return await data.posts.status;
+};
 
-const getBlogById = async (id: number) => {
+const getTodoById = async (id: number) => {
   const res = await fetch(`http://localhost:3000/api/todos/${id}`);
   const data = await res.json();
   return await data.posts;
 };
 
-export default function Page({ params }: { params: { id: number } }) {
+export default function Page({ params }: { params: { id: number} }) {
   const titleRef = useRef<HTMLInputElement | null>(null);
   const router = useRouter();
+  const value=getStatusValue(params.id)
+  console.log(value)
 
   const handleEdit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,7 +59,7 @@ export default function Page({ params }: { params: { id: number } }) {
   };
 
   useEffect(() => {
-    getBlogById(params.id)
+    getTodoById(params.id)
       .then((data) => {
         titleRef.current!.value = data.title;
       })
@@ -69,7 +77,7 @@ export default function Page({ params }: { params: { id: number } }) {
       <form onSubmit={handleEdit} className="flex justify-center ">
         <input type="text" ref={titleRef} className="border rounded w-60" />
         <div className="ml-4 flex items-center">
-          <Status todoId={params.id} />
+          <Status todoId={params.id} statusValue={value} />
 
           <button className={`${buttonStyle} mr-1 text-green-500`}>編集</button>
           <button

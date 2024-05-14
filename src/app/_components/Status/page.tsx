@@ -16,10 +16,11 @@ const statusTodo = async (status: string, id: number) => {
   return data;
 };
 
-const Status = ({ todoId }: { todoId: number }) => {
-  const [status, setStatus] = useState<string>();
+
+const Status = ({ todoId,statusValue }: { todoId: number,statusValue:any }) => {
+  const [status, setStatus] = useState<string>(statusValue);
   const router = useRouter();
-  console.log(status)
+
 
   const handleStatus = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const statusValue = e.target.value;
