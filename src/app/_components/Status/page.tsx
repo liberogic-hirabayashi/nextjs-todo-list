@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { list } from "postcss";
 
 const statusTodo = async (status: string, id: number) => {
   const res = await fetch(`http://localhost:3000/api/todos/${id}`, {
@@ -17,7 +15,7 @@ const statusTodo = async (status: string, id: number) => {
 };
 
 
-const Status = ({ todoId,statusValue }: { todoId: number,statusValue:string }) => {
+export default function Status({ todoId,statusValue }: { todoId: number,statusValue:string }){
   const router = useRouter();
 
   const handleStatus = async (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -43,4 +41,3 @@ const Status = ({ todoId,statusValue }: { todoId: number,statusValue:string }) =
   );
 };
 
-export default Status;

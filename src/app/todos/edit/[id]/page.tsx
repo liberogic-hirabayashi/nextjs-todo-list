@@ -27,7 +27,6 @@ const deleteTodo = async (id: number) => {
 const getStatusValue = async (id: number) => {
   const res = await fetch(`http://localhost:3000/api/todos/${id}`);
   const data = await res.json();
-  console.log(data.posts.status);
   return await data.posts.status;
 };
 
