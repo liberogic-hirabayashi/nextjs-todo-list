@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "./ui/button";
-import { signIn, signOut } from "../../auth";
+import { signIn, signOut } from "@/../auth";
 
 export function SignIn({
   provider,

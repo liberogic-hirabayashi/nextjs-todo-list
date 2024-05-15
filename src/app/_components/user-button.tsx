@@ -4,7 +4,7 @@ import {
 } from "./ui/dropdown-menu";
 import { SignIn, SignOut } from "./auth-components";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { auth } from "../../auth";
+import { auth } from "@/../auth";
 
 export default async function UserButton() {
   const session = await auth();
@@ -13,7 +13,6 @@ export default async function UserButton() {
   return (
     <div className="flex gap-2 items-center">
       <span className="hidden text-sm sm:inline-flex"></span>
-      <SignOut />
       <DropdownMenu>
           <Button variant="ghost" className="relative w-8 h-8 rounded-full">
             {session.user.image && (
@@ -33,6 +32,7 @@ export default async function UserButton() {
               </p>
             </div>
       </DropdownMenu>
+      <SignOut />
     </div>
   );
 }
